@@ -75,6 +75,7 @@ const Carousel = createReactClass({
     initialSlideHeight: PropTypes.number,
     initialSlideWidth: PropTypes.number,
     slideIndex: PropTypes.number,
+    slideAll: PropTypes.bool,
     slidesToShow: PropTypes.number,
     slidesToScroll: PropTypes.oneOfType([
       PropTypes.number,
@@ -105,9 +106,8 @@ const Carousel = createReactClass({
       framePadding: '0px',
       frameOverflow: 'hidden',
       slideIndex: 0,
-      slidesToScroll: 1,
-      slidesToShow: 1,
       slideWidth: 1,
+      slideAll: false,
       speed: 500,
       swiping: true,
       vertical: false,
@@ -118,16 +118,16 @@ const Carousel = createReactClass({
 
   getInitialState() {
     const breakpoints = this.sortBreakpoints();
-
     const defaultBreakpoint = breakpoints[0];
 
     return {
-      currentSlide: this.props.slideIndex,
+      currentSlide: this.props.slideIndex || 0,
       dragging: false,
       frameWidth: 0,
       left: 0,
       slideCount: 0,
       slideWidth: 0,
+      slidesToScroll: 1,
       top: 0,
       breakpoints,
       activeBreakpoint: defaultBreakpoint,
@@ -152,7 +152,10 @@ const Carousel = createReactClass({
   },
 
   sortBreakpoints() {
+    const { slideAll } = this.props;
+
     return this.props.breakpoints.sort((a, b) =>{
+      slideAll ? b.settings.slidesToScroll = b.settings.slidesToShow : b.settings.slidesToScroll;
       return b.breakpoint > a.breakpoint || b.breakpoint === 'default'
     });
   },
