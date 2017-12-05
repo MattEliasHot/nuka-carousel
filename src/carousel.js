@@ -596,7 +596,16 @@ const Carousel = createReactClass({
     );
   },
 
+  slidesToAdvance(current) {
+    const childrenCount = React.Children.count(this.props.children);
+
+    return Math.min(current, childrenCount);
+  },
+
   nextSlide() {
+    const { currentSlide, slidesToScroll } = this.state;
+    const scrollFromCurrent = currentSlide + slidesToScroll;
+
     var childrenCount = React.Children.count(this.props.children);
     var slidesToShow = this.props.slidesToShow;
     if (this.props.slidesToScroll === 'auto') {
@@ -610,16 +619,14 @@ const Carousel = createReactClass({
     }
 
     if (this.props.wrapAround) {
-      this.goToSlide(this.state.currentSlide + this.state.slidesToScroll);
+      this.goToSlide(this.slidesToAdvance(scrollFromCurrent));
     } else {
       if (this.props.slideWidth !== 1) {
-        return this.goToSlide(
-          this.state.currentSlide + this.state.slidesToScroll
-        );
+        return this.goToSlide(scrollFromCurrent);
       }
       this.goToSlide(
         Math.min(
-          this.state.currentSlide + this.state.slidesToScroll,
+          this.scrollFromCurrent(),
           childrenCount - slidesToShow
         )
       );
@@ -627,12 +634,15 @@ const Carousel = createReactClass({
   },
 
   previousSlide() {
+    const { currentSlide, slidesToScroll } = this.state;
+    const scrollFromCurrent = currentSlide - slidesToScroll;
+
     if (this.state.currentSlide <= 0 && !this.props.wrapAround) {
       return;
     }
 
     if (this.props.wrapAround) {
-      this.goToSlide(this.state.currentSlide - this.state.slidesToScroll);
+      this.goToSlide(this.slidesToAdvance(scrollFromCurrent));
     } else {
       this.goToSlide(
         Math.max(0, this.state.currentSlide - this.state.slidesToScroll)
