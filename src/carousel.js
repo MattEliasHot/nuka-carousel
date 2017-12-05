@@ -46,6 +46,7 @@ const Carousel = createReactClass({
     autoplayInterval: PropTypes.number,
     beforeSlide: PropTypes.func,
     breakpoints: PropTypes.arrayOf(PropTypes.object),
+    classNameSlide: PropTypes.string,
     cellAlign: PropTypes.oneOf(['left', 'center', 'right']),
     cellSpacing: PropTypes.number,
     data: PropTypes.func,
@@ -95,6 +96,7 @@ const Carousel = createReactClass({
       autoplay: false,
       autoplayInterval: 3000,
       beforeSlide: function() {},
+      classNameSlide: '',
       cellAlign: 'left',
       cellSpacing: 0,
       data: function() {},
@@ -771,7 +773,7 @@ const Carousel = createReactClass({
     return React.Children.map(children, function(child, index) {
       return (
         <li
-          className="slider-slide"
+          className={`slider-slide ${this.props.classNameSlide}`}
           style={self.getSlideStyles(index, positionValue)}
           key={index}
         >
