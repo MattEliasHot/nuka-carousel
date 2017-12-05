@@ -66,7 +66,7 @@ const DefaultDecorators = [
         return (
           <ul style={self.getListStyles()}>
             {
-              indexes.map(function(index) {
+              self.props.dots && indexes.map(function(index) {
                 return (
                   <li style={self.getListItemStyles()} key={index}>
                     <button

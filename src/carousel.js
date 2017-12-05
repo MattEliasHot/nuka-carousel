@@ -66,6 +66,7 @@ const Carousel = createReactClass({
       })
     ),
     dragging: PropTypes.bool,
+    dots: PropTypes.bool,
     easing: PropTypes.string,
     edgeEasing: PropTypes.string,
     framePadding: PropTypes.string,
@@ -97,6 +98,7 @@ const Carousel = createReactClass({
       data: function() {},
       decorators: decorators,
       dragging: true,
+      dots: true,
       easing: 'easeOutCirc',
       edgeEasing: 'easeOutElastic',
       framePadding: '0px',
@@ -215,6 +217,7 @@ const Carousel = createReactClass({
                   nextSlide={self.nextSlide}
                   previousSlide={self.previousSlide}
                   goToSlide={self.goToSlide}
+                  dots={self.props.dots}
                 />
               </div>
             );
