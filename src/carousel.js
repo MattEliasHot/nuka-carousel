@@ -773,7 +773,7 @@ const Carousel = createReactClass({
     return React.Children.map(children, function(child, index) {
       return (
         <li
-          className={`slider-slide ${this.props.classNameSlide}`}
+          className={`slider-slide ${self.props.classNameSlide}`}
           style={self.getSlideStyles(index, positionValue)}
           key={index}
         >
