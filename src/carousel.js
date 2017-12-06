@@ -817,9 +817,15 @@ const Carousel = createReactClass({
 
   getSlideWidth() {
     const { slidesToShow } = this.state;
-    const frameWidth = this.refs.frame.offsetWidth;
 
-    return frameWidth / slidesToShow;
+    if (slidesToShow) {
+      const frameWidth = this.refs.frame.offsetWidth;
+
+      return frameWidth / slidesToShow;
+    }
+    else {
+      return 0
+    }
   },
 
   setDimensions(props) {
