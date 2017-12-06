@@ -128,7 +128,7 @@ const Carousel = createReactClass({
       frameWidth: 0,
       left: 0,
       slideCount: 0,
-      slideWidth: 0,
+      slideWidth: this.getSlideWidth(),
       slidesToScroll: 1,
       top: 0,
       breakpoints,
@@ -815,6 +815,13 @@ const Carousel = createReactClass({
     );
   },
 
+  getSlideWidth() {
+    const { slidesToShow } = this.state;
+    const frameWidth = this.refs.frame.offsetWidth;
+
+    return frameWidth / slidesToShow;
+  },
+
   setDimensions(props) {
     props = props || this.props;
 
@@ -915,9 +922,7 @@ const Carousel = createReactClass({
         ? this.props.cellSpacing / 2 * -1 + 'px 0px'
         : '0px ' + this.props.cellSpacing / 2 * -1 + 'px',
       padding: 0,
-      minHeight: this.props.vertical
-        ? listWidth + spacingOffset
-        : this.state.slideHeight,
+      minHeight: this.props.vertical ? listWidth + spacingOffset : this.state.slideHeight,
       width: this.props.vertical ? 'auto' : listWidth + spacingOffset,
       cursor: this.state.dragging === true ? 'pointer' : 'inherit',
       boxSizing: 'border-box',
