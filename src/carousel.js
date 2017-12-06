@@ -816,7 +816,7 @@ const Carousel = createReactClass({
   },
 
   getSlideWidth() {
-    const { slidesToShow } = this.state;
+    const { slidesToShow } = this.props;
 
     if (slidesToShow) {
       const frameWidth = this.refs.frame.offsetWidth;
