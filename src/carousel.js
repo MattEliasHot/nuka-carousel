@@ -913,7 +913,7 @@ const Carousel = createReactClass({
         ? this.props.cellSpacing / 2 * -1 + 'px 0px'
         : '0px ' + this.props.cellSpacing / 2 * -1 + 'px',
       padding: 0,
-      height: this.props.vertical
+      minHeight: this.props.vertical
         ? listWidth + spacingOffset
         : this.state.slideHeight,
       width: this.props.vertical ? 'auto' : listWidth + spacingOffset,
