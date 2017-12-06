@@ -13,7 +13,7 @@ module.exports = {
 
   cache: true,
   debug: false,
-  devtool: '#cheap-module-eval-source-map',  
+  devtool: false,
   entry: [
     './demo/app.js'
   ],
