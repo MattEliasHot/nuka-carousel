@@ -681,10 +681,12 @@ const Carousel = createReactClass({
     }
 
     if (this.props.wrapAround) {
-      this.goToSlide(this.slidesToAdvance(scrollFromCurrent));
+      this.goToSlide(
+        currentSlide === 0 ? scrollFromCurrent : Math.max(0, scrollFromCurrent)
+      );
     } else {
       this.goToSlide(
-        Math.max(0, this.state.currentSlide - this.state.slidesToScroll)
+        Math.max(0, scrollFromCurrent)
       );
     }
   },
