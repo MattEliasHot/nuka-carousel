@@ -213,6 +213,73 @@ const Carousel = createReactClass({
     // see https://github.com/facebook/react/issues/3417#issuecomment-121649937
     this.mounted = false;
   },
+  
+  renderPrevSlides() {
+    const { children } = this.props;
+    const { slidesToScroll, currentSlide } = this.state;
+    const slidesAmount = React.Children.count(children) - 1;
+
+    const components = [];
+
+    for (let i = 0; i < slidesToScroll; i++) {
+      let newPosition = currentSlide - i;
+
+      if (newPosition <= 0) {
+        newPosition = newPosition + slidesAmount;
+      }
+
+      components.push(children[newPosition]);
+    }
+
+    return components.reverse();
+  },
+
+  renderCurrentSlides() {
+    const { children } = this.props;
+    const { slidesToScroll, currentSlide } = this.state;
+
+    const components = [];
+
+    for (let i = 0; i <= slidesToScroll; i++) {
+      let newPosition = currentSlide + i;
+
+      components.push(children[newPosition]);
+    }
+
+    return components;
+  },
+
+  renderNextSlides() {
+    const { children } = this.props;
+    const { slidesToScroll, currentSlide } = this.state;
+    const slidesAmount = React.Children.count(children) - 1;
+
+    const components = [];
+
+    for (let i = 1; i <= slidesToScroll; i++) {
+      let newPosition = (currentSlide + slidesToScroll) + i;
+
+      if (newPosition > slidesAmount) {
+        newPosition = newPosition - slidesAmount;
+      }
+
+      components.push(children[newPosition]);
+    }
+
+    return components;
+  },
+
+  renderSlides() {
+    const slides = [...this.renderPrevSlides(), ...this.renderCurrentSlides(), ...this.renderNextSlides()];
+    const formattedSlides = [];
+
+    slides.forEach(slide => {
+      const formattedSlide = this.formatChildren(slide);
+      formattedSlides.push(formattedSlide);
+    });
+
+    return formattedSlides;
+  },
 
   render() {
     var self = this;
@@ -235,7 +302,7 @@ const Carousel = createReactClass({
           onClick={this.handleClick}
         >
           <ul className="slider-list" ref="list" style={this.getListStyles()}>
-            {children}
+            {this.renderSlides()}
           </ul>
         </div>
         {this.props.decorators
@@ -769,20 +836,15 @@ const Carousel = createReactClass({
 
   formatChildren(children) {
     var self = this;
-    var positionValue = this.props.vertical
-      ? this.getTweeningValue('top')
-      : this.getTweeningValue('left');
-    return React.Children.map(children, function(child, index) {
-      return (
-        <li
-          className={`slider-slide ${self.props.classNameSlide}`}
-          style={self.getSlideStyles(index, positionValue)}
-          key={index}
-        >
-          {child}
-        </li>
-      );
-    });
+
+    return (
+      <li
+        className={`slider-slide ${self.props.classNameSlide}`}
+        style={self.getSlideStyles()}>
+
+        {children}
+      </li>
+    );
   },
 
   setInitialDimensions() {
@@ -944,20 +1006,8 @@ const Carousel = createReactClass({
   getSlideStyles(index, positionValue) {
     var targetPosition = this.getSlideTargetPosition(index, positionValue);
     return {
-      position: 'absolute',
-      left: this.props.vertical ? 0 : targetPosition,
-      top: this.props.vertical ? targetPosition : 0,
       display: this.props.vertical ? 'block' : 'inline-block',
-      listStyleType: 'none',
-      verticalAlign: 'top',
       width: this.props.vertical ? '100%' : this.state.slideWidth,
-      height: 'auto',
-      boxSizing: 'border-box',
-      MozBoxSizing: 'border-box',
-      marginLeft: this.props.vertical ? 'auto' : this.props.cellSpacing / 2,
-      marginRight: this.props.vertical ? 'auto' : this.props.cellSpacing / 2,
-      marginTop: this.props.vertical ? this.props.cellSpacing / 2 : 'auto',
-      marginBottom: this.props.vertical ? this.props.cellSpacing / 2 : 'auto',
     };
   },
 

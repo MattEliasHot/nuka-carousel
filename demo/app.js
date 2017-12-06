@@ -7,6 +7,14 @@ import createReactClass from 'create-react-class';
 
 window.React = React;
 
+const breakpoints = [
+  { breakpoint: 500, settings: { slidesToShow: 2 } },
+  { breakpoint: 800, settings: { slidesToShow: 3 } },
+  { breakpoint: 1100, settings: { slidesToShow: 4 } },
+  { breakpoint: 1400, settings: { slidesToShow: 5 } },
+  { breakpoint: 'default', settings: { slidesToShow: 6 } }
+]
+
 const App = createReactClass({
   mixins: [Carousel.ControllerMixin],
 
@@ -14,26 +22,27 @@ const App = createReactClass({
 
   render() {
     return (
-      <div style={{width: '50%', margin: 'auto'}}>
-        <Carousel
-          ref="carousel"
-          data={this.setCarouselData.bind(this, 'carousel')}
-          slideIndex={this.state.slideIndex}
-          afterSlide={newSlideIndex => this.setState({ slideIndex: newSlideIndex })}>
-          <img src="http://placehold.it/1000x400&text=slide1"/>
-          <img src="http://placehold.it/1000x400&text=slide2"/>
-          <img src="http://placehold.it/1000x400&text=slide3"/>
-          <img src="http://placehold.it/1000x400&text=slide4"/>
-          <img src="http://placehold.it/1000x400&text=slide5"/>
-          <img src="http://placehold.it/1000x400&text=slide6"/>
-        </Carousel>
-        <button onClick={() => this.setState({ slideIndex: 0 })}>1</button>
-        <button onClick={() => this.setState({ slideIndex: 1 })}>2</button>
-        <button onClick={() => this.setState({ slideIndex: 2 })}>3</button>
-        <button onClick={() => this.setState({ slideIndex: 3 })}>4</button>
-        <button onClick={() => this.setState({ slideIndex: 4 })}>5</button>
-        <button onClick={() => this.setState({ slideIndex: 5 })}>6</button>
-      </div>
+      <Carousel
+        ref="carousel"
+        data={this.setCarouselData.bind(this, 'carousel')}
+        slideIndex={this.state.slideIndex}
+        wrapAround={true}
+        breakpoints={breakpoints}
+        dots={false}
+        slideAll={true}
+        afterSlide={newSlideIndex => this.setState({ slideIndex: newSlideIndex })}>
+        <img width='200' height='200' src='https://images6.alphacoders.com/488/thumb-1920-488295.jpg' />
+        <img width='200' height='200' src='https://steamuserimages-a.akamaihd.net/ugc/3425286547561292813/3E9598C4A8C6ED79B7F9B7EFC44095CCC24F7581/' />
+        <img width='200' height='200' src='https://dota2.gamepedia.com/media/dota2.gamepedia.com/a/ab/Cosmetic_icon_Dragon%27s_Ascension.png' />
+        <img width='200' height='200' src='https://dota2.gamepedia.com/media/dota2.gamepedia.com/0/03/Cosmetic_icon_Eternal_Nymph.png' />
+        <img width='200' height='200' src='https://i.ytimg.com/vi/SzarPu26LWs/maxresdefault.jpg' />
+        <img width='200' height='200' src='http://im.ziffdavisinternational.com/ign_nl/screenshot/default/shadow-fiend_unc1.jpg' />
+        <img width='200' height='200' src='https://dota2.gamepedia.com/media/dota2.gamepedia.com/1/1b/Sven_icon.png' />
+        <img width='200' height='200' src='https://dota2.gamepedia.com/media/dota2.gamepedia.com/8/8e/Phantom_Assassin_icon.png' />
+        <img width='200' height='200' src='https://dota2.gamepedia.com/media/dota2.gamepedia.com/3/35/Lina_icon.png' />
+        <img width='200' height='200' src='https://dota2.gamepedia.com/media/dota2.gamepedia.com/b/b8/Lion_icon.png' />
+        <img width='200' height='200' src='https://dota2.gamepedia.com/media/dota2.gamepedia.com/2/2b/Lifestealer_icon.png' />
+      </Carousel>
     )
   }
 });
