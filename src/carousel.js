@@ -242,10 +242,7 @@ const Carousel = createReactClass({
           ? this.props.decorators.map(function(Decorator, index) {
             return (
               <div
-                style={assign(
-                  self.getDecoratorStyles(Decorator.position),
-                  Decorator.style || {}
-                )}
+                style={Decorator.style || self.getDecoratorStyles(Decorator.position)}
                 className={'slider-decorator-' + index}
                 key={index}
               >
