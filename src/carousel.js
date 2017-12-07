@@ -128,7 +128,7 @@ const Carousel = createReactClass({
       frameWidth: 0,
       left: 0,
       slideCount: 0,
-      slideWidth: this.getSlideWidth(),
+      slideWidth: 0,
       slidesToScroll: 1,
       top: 0,
       breakpoints,
@@ -813,19 +813,6 @@ const Carousel = createReactClass({
         self.setExternalData();
       }
     );
-  },
-
-  getSlideWidth() {
-    const { slidesToShow } = this.props;
-
-    if (slidesToShow) {
-      const frameWidth = this.refs.frame.offsetWidth;
-
-      return frameWidth / slidesToShow;
-    }
-    else {
-      return 0
-    }
   },
 
   setDimensions(props) {
