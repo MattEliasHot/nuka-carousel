@@ -637,7 +637,7 @@ const Carousel = createReactClass({
   slidesToAdvance(current) {
     const childrenCount = React.Children.count(this.props.children);
 
-    return Math.min(current, childrenCount);
+    return Math.min(current, childrenCount - 1);
   },
 
   nextSlide() {
