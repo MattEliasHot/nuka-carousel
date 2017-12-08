@@ -771,10 +771,11 @@ const Carousel = createReactClass({
       : this.getTweeningValue('left');
 
     const { currentSlide, slidesToScroll } = this.state;
-    const isActiveSlide = currentSlide + slidesToScroll % React.Children.count(children);
-    const activeClass = isActiveSlide ? 'slider-slide-active' : '';
+    const endSlide = currentSlide + slidesToScroll % React.Children.count(children);
+    
     
     return React.Children.map(children, function(child, index) {
+      const activeClass = index >= currentSlide  && index <= endSlide ? 'slider-slide-active' : '';
       const currentClass = index === currentSlide ? 'slider-slide-current' : '';
 
       return (
