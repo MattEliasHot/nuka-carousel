@@ -782,10 +782,7 @@ const Carousel = createReactClass({
     const endSlide = maxSlide % React.Children.count(children);
     
     return React.Children.map(children, function(child, index) {
-      const isActive = (
-        (index >= currentSlide && index < maxSlide) ||
-        (index <= endSlide && endSlide < currentSlide)
-      );
+      const isActive = index >= currentSlide && index < maxSlide;
 
       const activeClass = isActive ? 'slider-slide-active' : '';
       const currentClass = index === currentSlide ? 'slider-slide-current' : '';
