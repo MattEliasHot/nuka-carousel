@@ -638,7 +638,7 @@ const Carousel = createReactClass({
     const childrenCount = React.Children.count(this.props.children);
     const { slidesToScroll } = this.state;
 
-    if(current > childrenCount) {
+    if(current < childrenCount && current > childrenCount - slidesToScroll) {
       return childrenCount - slidesToScroll;
     }
     else {
