@@ -639,10 +639,10 @@ const Carousel = createReactClass({
     const { slidesToScroll } = this.state;
 
     if(current > childrenCount) {
-      return current;
+      return childrenCount - slidesToScroll;
     }
     else {
-      return childrenCount - slidesToScroll;
+      return current;
     }
   },
 
