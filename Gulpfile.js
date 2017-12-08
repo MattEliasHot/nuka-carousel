@@ -22,7 +22,7 @@ function isFixed(file) {
 }
 
 gulp.task('open', function() {
-  open('', {url: 'http://localhost:8080/webpack-dev-server/'});
+  open('', {url: 'http://localhost:8081/webpack-dev-server/'});
 });
 
 gulp.task('babel', function() {
