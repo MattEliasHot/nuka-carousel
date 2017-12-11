@@ -153,8 +153,10 @@ const Carousel = createReactClass({
     }
   },
 
-  componentDidUpdate() {
-    this.setDimensions();
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState !== this.state) {
+      this.setDimensions();
+    }
   },
 
   sortBreakpoints() {
