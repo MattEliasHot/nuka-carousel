@@ -153,6 +153,10 @@ const Carousel = createReactClass({
     }
   },
 
+  componentDidUpdate() {
+    this.setDimensions();
+  },
+
   sortBreakpoints() {
     const { slideAll } = this.props;
 
@@ -866,17 +870,14 @@ const Carousel = createReactClass({
     frameHeight = slideHeight + props.cellSpacing * (this.state.slidesToShow - 1);
     frameWidth = props.vertical ? frameHeight : frame.offsetWidth;
 
-    const setHeight = () => { this.setState({ slideHeight }, self.setLeft) };
-    const setWidth = () => { this.setState({ slideWidth }, setHeight) };
-
     const dimensions = {
-      frameWidth: frameWidth,
-      slidesToScroll: slidesToScroll,
-      left: props.vertical ? 0 : this.getTargetLeft(),
-      top: props.vertical ? this.getTargetLeft() : 0,
+      slideHeight,
+      slideWidth,
+      slidesToScroll,
+      frameWidth
     };
 
-    this.setState(dimensions, setWidth);
+    this.setState(dimensions, self.setLeft);
   },
 
   setLeft() {
