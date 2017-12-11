@@ -844,46 +844,39 @@ const Carousel = createReactClass({
     slidesToScroll = this.state.slidesToScroll;
     frame = this.refs.frame;
     firstSlide = frame.childNodes[0].childNodes[0];
-    if (firstSlide) {
-      firstSlide.style.height = 'auto';
-      slideHeight = this.props.vertical
-        ? firstSlide.offsetHeight * this.state.slidesToShow
-        : firstSlide.offsetHeight;
-    } else {
-      slideHeight = 100;
-    }
+
+    firstSlide.style.height = 'auto';
 
     if (typeof props.slideWidth !== 'number') {
       slideWidth = parseInt(props.slideWidth);
-    } else {
-      if (props.vertical) {
-        slideWidth = slideHeight / this.state.slidesToShow * props.slideWidth;
-      } else {
-        slideWidth = frame.offsetWidth / this.state.slidesToShow * props.slideWidth;
-      }
     }
 
-    if (!props.vertical) {
-      slideWidth -=
-        props.cellSpacing * ((100 - 100 / this.state.slidesToShow) / 100);
+    if (props.vertical) {
+      slideHeight = firstSlide.offsetHeight * this.state.slidesToShow;
+      slideWidth = slideHeight / this.state.slidesToShow * props.slideWidth;
     }
+    else {
+      slideHeight = firstSlide.offsetHeight;
+      slideWidth = frame.offsetWidth / this.state.slidesToShow * props.slideWidth;
+      slideWidth -= props.cellSpacing * ((100 - 100 / this.state.slidesToShow) / 100);
+    }
+
+    slideHeight = slideHeight || 100;
 
     frameHeight = slideHeight + props.cellSpacing * (this.state.slidesToShow - 1);
     frameWidth = props.vertical ? frameHeight : frame.offsetWidth;
 
-    this.setState(
-      {
-        slideHeight: slideHeight,
-        frameWidth: frameWidth,
-        slideWidth: slideWidth,
-        slidesToScroll: slidesToScroll,
-        left: props.vertical ? 0 : this.getTargetLeft(),
-        top: props.vertical ? this.getTargetLeft() : 0,
-      },
-      function() {
-        self.setLeft();
-      }
-    );
+    const setHeight = () => { this.setState({ slideHeight }, self.setLeft) };
+    const setWidth = () => { this.setState({ slideWidth }, setHeight) };
+
+    const dimensions = {
+      frameWidth: frameWidth,
+      slidesToScroll: slidesToScroll,
+      left: props.vertical ? 0 : this.getTargetLeft(),
+      top: props.vertical ? this.getTargetLeft() : 0,
+    };
+
+    this.setState(dimensions, setWidth);
   },
 
   setLeft() {
