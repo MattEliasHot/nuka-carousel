@@ -154,7 +154,7 @@ const Carousel = createReactClass({
   },
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState !== this.state) {
+    if (JSON.stringify(prevState) !== JSON.stringify(this.state)) {
       this.setDimensions();
     }
   },
