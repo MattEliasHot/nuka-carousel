@@ -862,7 +862,7 @@ const Carousel = createReactClass({
       slideWidth = slideHeight / this.state.slidesToShow * props.slideWidth;
     }
     else {
-      slideHeight = firstSlide.offsetHeight;
+      slideHeight = firstSlide.scrollHeight || firstSlide.offsetHeight;
       slideWidth = frame.offsetWidth / this.state.slidesToShow * props.slideWidth;
       slideWidth -= props.cellSpacing * ((100 - 100 / this.state.slidesToShow) / 100);
     }
