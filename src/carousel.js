@@ -783,7 +783,7 @@ const Carousel = createReactClass({
       ? this.getTweeningValue('top')
       : this.getTweeningValue('left');
 
-    const { currentSlide, slidesToScroll } = this.state;
+    const { currentSlide, slidesToShow } = this.state;
     const maxSlide = currentSlide + slidesToShow;
     const endSlide = maxSlide % React.Children.count(children);
     
