@@ -132,6 +132,7 @@ const Carousel = createReactClass({
       slidesToScroll: 1,
       top: 0,
       breakpoints,
+      widthRatio: 1,
       activeBreakpoint: defaultBreakpoint,
       ...defaultBreakpoint.settings
     };
@@ -865,6 +866,7 @@ const Carousel = createReactClass({
       slideHeight = firstSlide.scrollHeight || firstSlide.offsetHeight;
       slideWidth = frame.offsetWidth / this.state.slidesToShow * props.slideWidth;
       slideWidth -= props.cellSpacing * ((100 - 100 / this.state.slidesToShow) / 100);
+      slideWidth *= this.state.widthRatio;
     }
 
     slideHeight = slideHeight || 100;
