@@ -165,7 +165,7 @@ const Carousel = createReactClass({
 
     return this.props.breakpoints.sort((a, b) =>{
       slideAll ? b.settings.slidesToScroll = b.settings.slidesToShow : b.settings.slidesToScroll;
-      return b.breakpoint > a.breakpoint || b.breakpoint === 'default'
+      return (b.breakpoint > a.breakpoint || b.breakpoint === 'default') ? 1 : -1;
     });
   },
 
