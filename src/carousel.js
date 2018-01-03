@@ -188,10 +188,13 @@ const Carousel = createReactClass({
   },
 
   setActiveBreakpoint(activeBreakpoint) {
-    this.setState({
-      activeBreakpoint,
-      ...activeBreakpoint.settings
-    });
+    const { settings } = activeBreakpoint;
+
+    if (this.props.slideAll) {
+      settings.slidesToScroll = settings.slidesToShow;
+    }
+
+    this.setState({ activeBreakpoint, ...settings });
   },
 
   componentWillReceiveProps(nextProps) {
