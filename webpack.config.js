@@ -13,7 +13,7 @@ module.exports = {
 
   cache: true,
   debug: false,
-  devtool: false,
+  devtool: 'eval-source-map',
   entry: [
     './demo/app.js'
   ],
@@ -25,6 +25,9 @@ module.exports = {
 
   resolve: {
     extensions: ['', '.js']
+  },
+  node: {
+    fs: 'empty'
   },
   module: {
     preLoaders: [{
