@@ -2,11 +2,10 @@ import Handlers from './handlers';
 import Carousel from './wrapperCarousel';
 
 class TouchEvents {
-  constructor() {
-    const self = this;
+  init() {
     this.touchObject = {};
 
-    if (self.props.swiping === false) {
+    if (Carousel.component.props.swiping === false) {
       return null;
     }
   }

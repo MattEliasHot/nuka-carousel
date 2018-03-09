@@ -11,6 +11,8 @@ import Autoplay from './autoplay';
 import Handlers from './handlers';
 import Breakpoints from './breakpoints';
 import Dimensions from './dimensions';
+import TouchEvents from './touchEvents';
+import MouseEvents from './mouseEvents';
 
 import WrapperCarousel from './wrapperCarousel';
 
@@ -49,11 +51,14 @@ class Carousel extends PureComponent {
 
   componentWillMount() {
     WrapperCarousel.setContext(this);
-    
-    this.state = this.getInitialState();
+
+    this.state = { ...this.getInitialState(), ...tweenState.Mixin.getInitialState() };
 
     Breakpoints.findAndSetActiveBreakpoint();
     Dimensions.setInitialDimensions();
+
+    TouchEvents.init();
+    MouseEvents.init();
   }
 
   componentDidMount() {

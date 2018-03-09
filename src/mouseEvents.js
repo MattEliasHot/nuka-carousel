@@ -4,7 +4,7 @@ import Handlers from './handlers';
 import TouchEvents from './touchEvents';
 
 class MouseEvents {
-  constructor() {
+  init() {
     if (Carousel.component.props.dragging === false) {
       return null;
     }
