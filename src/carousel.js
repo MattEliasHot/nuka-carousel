@@ -13,6 +13,7 @@ import Breakpoints from './breakpoints';
 import Dimensions from './dimensions';
 import TouchEvents from './touchEvents';
 import MouseEvents from './mouseEvents';
+import CarouselStyles from './carouselStyles';
 
 import WrapperCarousel from './wrapperCarousel';
 
@@ -110,62 +111,9 @@ class Carousel extends PureComponent {
     this.mounted = false;
   }
 
-  render() {
-    let self = this;
-    let children = this.formatChildren(this.props.children);
-
-    return (
-      <div
-        ref="slider"
-        className={`slider ${this.props.className}`}
-        style={{ ...this.getSliderStyles(), ...this.props.style }}>
-
-        <div
-          className="slider-frame"
-          ref="frame"
-          style={this.getFrameStyles()}
-          onClick={Handlers.handleClick}
-          {...this.getTouchEvents()}
-          {...this.getMouseEvents()}>
-
-          <ul className="slider-list" ref="list" style={this.getListStyles()}>
-            {children}
-          </ul>
-        </div>
-
-        { this.props.decorators.length > 0 && this.props.decorators.map((Decorator, index) => (
-          <div
-            style={Decorator.style || self.getDecoratorStyles(Decorator.position)}
-            className={`slider-decorator-${  index}`}
-            key={index}>
-
-            <Decorator.component
-              currentSlide={self.state.currentSlide}
-              slideCount={self.state.slideCount}
-              frameWidth={self.state.frameWidth}
-              slideWidth={self.state.slideWidth}
-              slidesToScroll={self.state.slidesToScroll}
-              cellSpacing={self.props.cellSpacing}
-              slidesToShow={self.state.slidesToShow}
-              wrapAround={self.props.wrapAround}
-              nextSlide={Actions.nextSlide}
-              previousSlide={Actions.previousSlide}
-              goToSlide={Actions.goToSlide}
-              dots={self.props.dots}
-            />
-          </div>
-        ))}
-
-        <style type="text/css" dangerouslySetInnerHTML={{ __html: self.getStyleTagStyles() }} />
-      </div>
-    );
-  }
-
-
   // Bootstrapping
-
   bindEvents() {
-    let self = this;
+    const self = this;
     if (ExecutionEnvironment.canUseDOM) {
       addEvent(window, 'resize', self.onResize);
       addEvent(document, 'readystatechange', self.onReadyStateChange);
@@ -177,7 +125,7 @@ class Carousel extends PureComponent {
   }
 
   unbindEvents() {
-    let self = this;
+    const self = this;
 
     if (ExecutionEnvironment.canUseDOM) {
       removeEvent(window, 'resize', self.onResize);
@@ -186,10 +134,8 @@ class Carousel extends PureComponent {
   }
 
   formatChildren(children) {
-    let self = this;
-    let positionValue = this.props.vertical
-      ? this.getTweeningValue('top')
-      : this.getTweeningValue('left');
+    const self = this;
+    const positionValue = this.props.vertical ? this.getTweeningValue('top') : this.getTweeningValue('left');
 
     const { currentSlide, slidesToShow } = this.state;
     const maxSlide = currentSlide + slidesToShow;
@@ -212,9 +158,73 @@ class Carousel extends PureComponent {
 
   // Data
   setExternalData() {
-    if (this.props.data) {
-      this.props.data();
-    }
+    this.props.data && this.props.data();
+  }
+
+  render() {
+    const children = this.formatChildren(this.props.children);
+
+    const {
+      currentSlide,
+      slideCount,
+      frameWidth,
+      slideWidth,
+      slidesToScroll,
+      slidesToShow
+    } = this.state;
+
+    const {
+      cellSpacing,
+      wrapAround,
+      dots,
+      decorators
+    } = this.props;
+
+    return (
+      <div
+        ref="slider"
+        className={`slider ${this.props.className}`}
+        style={{ ...CarouselStyles.getSliderStyles(), ...this.props.style }}>
+
+        <div
+          className="slider-frame"
+          ref="frame"
+          style={CarouselStyles.getFrameStyles()}
+          onClick={Handlers.handleClick}
+          {...TouchEvents}
+          {...MouseEvents}>
+
+          <ul className="slider-list" ref="list" style={CarouselStyles.getListStyles()}>
+            {children}
+          </ul>
+        </div>
+
+        { decorators.length > 0 && decorators.map((Decorator, index) => (
+          <div
+            style={Decorator.style || CarouselStyles.getDecoratorStyles(Decorator.position)}
+            className={`slider-decorator-${index}`}
+            key={index}>
+
+            <Decorator.component
+              currentSlide={currentSlide}
+              slideCount={slideCount}
+              frameWidth={frameWidth}
+              slideWidth={slideWidth}
+              slidesToScroll={slidesToScroll}
+              cellSpacing={cellSpacing}
+              slidesToShow={slidesToShow}
+              wrapAround={wrapAround}
+              dots={dots}
+              nextSlide={Actions.nextSlide}
+              previousSlide={Actions.previousSlide}
+              goToSlide={Actions.goToSlide}
+            />
+          </div>
+        ))}
+
+        <style type="text/css" dangerouslySetInnerHTML={{ __html: CarouselStyles.getStyleTagStyles() }} />
+      </div>
+    );
   }
 }
 
