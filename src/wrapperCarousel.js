@@ -1,6 +1,6 @@
 class CarouselWrapper {
   setContext(context) {
-    this.component= context;
+    this.component = context;
   }
 }
 

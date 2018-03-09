@@ -5,7 +5,7 @@ class Dimensions {
   setInitialDimensions() {
     let self = this;
 
-    const { vertical, initialSlideWidth, cellSpacing, children } = Carousel.component.props;
+    const { vertical, initialSlideWidth, initialSlideHeight, cellSpacing, children } = Carousel.component.props;
     const { slidesToShow } = Carousel.component.state;
 
     const slideWidth = (vertical ? initialSlideHeight : initialSlideWidth) || 0;
@@ -25,12 +25,12 @@ class Dimensions {
   }
 
   setDimensions(props) {
-    let slideHeight;
+    let slideHeight, slideWidth;
 
-    const { slidesToScroll, slidesToShow, widthRatio } = Carousel.components.state;
+    const { slidesToScroll, slidesToShow, widthRatio } = Carousel.component.state;
     const { slideWidth: DefaultSlideWidth, vertical, cellSpacing } = Carousel.component.props;
 
-    const frame = this.refs.frame;
+    const frame = Carousel.component.refs.frame;
     const firstSlide = frame.childNodes[0].childNodes[0];
 
     firstSlide.style.height = 'auto';

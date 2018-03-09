@@ -13,8 +13,8 @@ class Actions {
         return;
       }
       if (index >= React.Children.count(Carousel.component.props.children)) {
-        Carousel.component.props.beforeSlide(this.state.currentSlide, 0);
-        return this.setState(
+        Carousel.component.props.beforeSlide(Carousel.component.state.currentSlide, 0);
+        return Carousel.component.setState(
           {
             currentSlide: 0
           },
@@ -34,9 +34,9 @@ class Actions {
         );
       } else {
         const endSlide
-          = React.Children.count(Carousel.component.props.children) - this.state.slidesToScroll;
-        Carousel.component.props.beforeSlide(this.state.currentSlide, endSlide);
-        return this.setState(
+          = React.Children.count(Carousel.component.props.children) - Carousel.component.state.slidesToScroll;
+        Carousel.component.props.beforeSlide(Carousel.component.state.currentSlide, endSlide);
+        return Carousel.component.setState(
           {
             currentSlide: endSlide
           },
@@ -57,12 +57,12 @@ class Actions {
       }
     }
 
-    Carousel.component.props.beforeSlide(this.state.currentSlide, index);
+    Carousel.component.props.beforeSlide(Carousel.component.state.currentSlide, index);
 
-    if (index !== this.state.currentSlide) {
+    if (index !== Carousel.component.state.currentSlide) {
       Carousel.component.props.afterSlide(index);
     }
-    this.setState(
+    Carousel.component.setState(
       {
         currentSlide: index
       },
@@ -76,7 +76,7 @@ class Actions {
 
   slidesToAdvance(current) {
     const childrenCount = React.Children.count(Carousel.component.props.children);
-    const { slidesToScroll } = this.state;
+    const { slidesToScroll } = Carousel.component.state;
 
     if (current < childrenCount && current > childrenCount - slidesToScroll) {
       return childrenCount - slidesToScroll;
@@ -86,15 +86,15 @@ class Actions {
   }
 
   nextSlide() {
-    const { currentSlide, slidesToScroll } = this.state;
+    const { currentSlide, slidesToScroll } = Carousel.component.state;
 
     const childrenCount = React.Children.count(Carousel.component.props.children);
     const scrollFromCurrent = currentSlide + slidesToScroll;
 
-    const slidesToShow = this.state.slidesToShow;
+    const slidesToShow = Carousel.component.state.slidesToShow;
 
     if (
-      this.state.currentSlide >= childrenCount - slidesToShow
+      Carousel.component.state.currentSlide >= childrenCount - slidesToShow
       && !Carousel.component.props.wrapAround
     ) {
       return;
@@ -116,10 +116,10 @@ class Actions {
   }
 
   previousSlide() {
-    const { currentSlide, slidesToScroll } = this.state;
+    const { currentSlide, slidesToScroll } = Carousel.component.state;
     const scrollFromCurrent = currentSlide - slidesToScroll;
 
-    if (this.state.currentSlide <= 0 && !Carousel.component.props.wrapAround) {
+    if (Carousel.component.state.currentSlide <= 0 && !Carousel.component.props.wrapAround) {
       return;
     }
 

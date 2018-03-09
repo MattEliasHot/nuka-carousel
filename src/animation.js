@@ -15,7 +15,7 @@ class Animation {
   getTargetLeft(touchOffset, slide) {
     let offset = 0;
 
-    const target = slide || this.state.currentSlide;
+    const target = slide || Carousel.component.state.currentSlide;
     switch (Carousel.component.props.cellAlign) {
       case 'left': {
         offset = 0;
@@ -23,12 +23,12 @@ class Animation {
         break;
       }
       case 'center': {
-        offset = (this.state.frameWidth - this.state.slideWidth) / 2;
+        offset = (Carousel.component.state.frameWidth - Carousel.component.state.slideWidth) / 2;
         offset -= Carousel.component.props.cellSpacing * target;
         break;
       }
       case 'right': {
-        offset = this.state.frameWidth - this.state.slideWidth;
+        offset = Carousel.component.state.frameWidth - Carousel.component.state.slideWidth;
         offset -= Carousel.component.props.cellSpacing * target;
         break;
       }
@@ -36,16 +36,16 @@ class Animation {
         offset = 0;
     }
 
-    let left = this.state.slideWidth * target;
+    let left = Carousel.component.state.slideWidth * target;
 
     const lastSlide
-    = this.state.currentSlide > 0
-    && target + this.state.slidesToScroll >= this.state.slideCount;
+    = Carousel.component.state.currentSlide > 0
+    && target + Carousel.component.state.slidesToScroll >= Carousel.component.state.slideCount;
 
     if (lastSlide && Carousel.component.props.slideWidth !== 1 && !Carousel.component.props.wrapAround) {
-      left = this.state.slideWidth * this.state.slideCount - this.state.frameWidth;
+      left = Carousel.component.state.slideWidth * Carousel.component.state.slideCount - Carousel.component.state.frameWidth;
       offset = 0;
-      offset -= Carousel.component.props.cellSpacing * (this.state.slideCount - 1);
+      offset -= Carousel.component.props.cellSpacing * (Carousel.component.state.slideCount - 1);
     }
 
     offset -= touchOffset || 0;

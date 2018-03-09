@@ -7,6 +7,7 @@ import reactMixin from 'react-mixin';
 import decorators from './decorators';
 
 import Actions from './actions';
+import Animation from './animation';
 import Autoplay from './autoplay';
 import Handlers from './handlers';
 import Breakpoints from './breakpoints';
@@ -14,6 +15,7 @@ import Dimensions from './dimensions';
 import TouchEvents from './touchEvents';
 import MouseEvents from './mouseEvents';
 import CarouselStyles from './carouselStyles';
+import CarouselSlide from './carouselSlide';
 
 import WrapperCarousel from './wrapperCarousel';
 
@@ -133,26 +135,36 @@ class Carousel extends PureComponent {
     }
   }
 
-  formatChildren(children) {
+  renderChildren(children) {
     const self = this;
     const positionValue = this.props.vertical ? this.getTweeningValue('top') : this.getTweeningValue('left');
 
     const { currentSlide, slidesToShow } = this.state;
     const maxSlide = currentSlide + slidesToShow;
-    const endSlide = maxSlide % React.Children.count(children);
 
     return React.Children.map(children, (child, index) => {
       const isActive = index >= currentSlide && index < maxSlide;
 
       const activeClass = isActive ? 'slider-slide-active' : '';
       const currentClass = index === currentSlide ? 'slider-slide-current' : '';
+
+      return (
+        <CarouselSlide
+          index={index}
+          positionValue={positionValue}
+          isActive={isActive}
+          currentClass={currentClass}
+          activeClass={activeClass}>
+          {child}
+        </CarouselSlide>
+      );
     });
   }
 
   setLeft() {
     this.setState({
-      left: this.props.vertical ? 0 : this.getTargetLeft(),
-      top: this.props.vertical ? this.getTargetLeft() : 0
+      left: this.props.vertical ? 0 : Animation.getTargetLeft(),
+      top: this.props.vertical ? Animation.getTargetLeft() : 0
     });
   }
 
@@ -162,7 +174,7 @@ class Carousel extends PureComponent {
   }
 
   render() {
-    const children = this.formatChildren(this.props.children);
+    const children = this.renderChildren(this.props.children);
 
     const {
       currentSlide,

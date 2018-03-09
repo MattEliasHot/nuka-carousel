@@ -1,4 +1,5 @@
 import Handlers from './handlers';
+import Animation from './animation';
 import Carousel from './wrapperCarousel';
 
 class TouchEvents {
@@ -54,11 +55,11 @@ class TouchEvents {
 
     Carousel.component.setState({
       left: self.props.vertical
-        ? 0 : self.getTargetLeft(
+        ? 0 : Animation.getTargetLeft(
           this.touchObject.length * this.touchObject.direction
         ),
       top: self.props.vertical
-        ? self.getTargetLeft(
+        ? Animation.getTargetLeft(
           this.touchObject.length * this.touchObject.direction
         ) : 0
     });

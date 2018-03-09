@@ -1,5 +1,5 @@
 import Carousel from './wrapperCarousel';
-
+import Animation from './animation';
 import Handlers from './handlers';
 import TouchEvents from './touchEvents';
 
@@ -72,11 +72,11 @@ class MouseEvents {
     Carousel.component.setState({
       left: Carousel.component.props.vertical
         ? 0
-        : Carousel.component.getTargetLeft(
+        : Animation.getTargetLeft(
           TouchEvents.touchObject.length * TouchEvents.touchObject.direction
         ),
       top: Carousel.component.props.vertical
-        ? Carousel.component.getTargetLeft(
+        ? Animation.getTargetLeft(
           TouchEvents.touchObject.length * TouchEvents.touchObject.direction
         )
         : 0

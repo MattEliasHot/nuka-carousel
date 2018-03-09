@@ -5,7 +5,7 @@ export default class CarouselSlide extends PureComponent {
   render() {
     return (
       <li
-        className={`slider-slide ${this.props.classNameSlide} ${this.props.currentClass} ${this.props.activeClass}`}
+        className={`slider-slide ${Carousel.component.props.classNameSlide} ${this.props.currentClass} ${this.props.activeClass}`}
         style={this.getSlideStyles(this.props.index, this.props.positionValue)}
         key={this.props.index}>
         {this.props.children}
