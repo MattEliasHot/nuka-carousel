@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import ReactDom from 'react-dom';
 import tweenState from 'kw-react-tween-state';
 import ExecutionEnvironment from 'exenv';
+import reactMixin from 'react-mixin';
 
 import decorators from './decorators';
 
@@ -17,6 +18,7 @@ import { PROP_TYPES, DEFAULT_PROPS } from './constants';
 
 import { addEvent, removeEvent } from './utils';
 
+@reactMixin.decorate(tweenState.Mixin)
 class Carousel extends PureComponent {
   static propTypes = PROP_TYPES;
 
@@ -24,9 +26,6 @@ class Carousel extends PureComponent {
     ...DEFAULT_PROPS,
     decorators
   }
-
-  displayName = 'Carousel';
-  mixins = [tweenState.Mixin];
 
   getInitialState() {
     const breakpoints = Breakpoints.sortBreakpoints();
@@ -229,4 +228,7 @@ Carousel.ControllerMixin = {
   }
 };
 
+const CarouselMixin = Carousel.ControllerMixin;
+
 export default Carousel;
+export { CarouselMixin };

@@ -1,6 +1,6 @@
 'use strict';
 
-import Carousel from '../src/carousel';
+import Carousel, { CarouselMixin } from '../src/carousel';
 import React from 'react';
 import ReactDom from 'react-dom';
 import createReactClass from 'create-react-class';
@@ -45,7 +45,7 @@ const breakpoints = [
 ];
 
 const App = createReactClass({
-  mixins: [Carousel.ControllerMixin],
+  mixins: [CarouselMixin],
 
   getInitialState() { return { slideIndex: 0 }; },
 
