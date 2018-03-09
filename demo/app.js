@@ -6,6 +6,43 @@ import ReactDom from 'react-dom';
 import createReactClass from 'create-react-class';
 
 window.React = React;
+const breakpoints = [
+  {
+    "breakpoint": 576,
+    "settings": {
+      "slidesToShow": 1,
+      "widthRatio": 0.625
+    }
+  },
+  {
+    "breakpoint": 768,
+    "settings": {
+      "slidesToShow": 3,
+      "widthRatio": 0.95
+    }
+  },
+  {
+    "breakpoint": 992,
+    "settings": {
+      "slidesToShow": 4,
+      "widthRatio": 1
+    }
+  },
+  {
+    "breakpoint": 1200,
+    "settings": {
+      "slidesToShow": 5,
+      "widthRatio": 1
+    }
+  },
+  {
+    "breakpoint": "default",
+    "settings": {
+      "slidesToShow": 6,
+      "widthRatio": 1
+    }
+  }
+];
 
 const App = createReactClass({
   mixins: [Carousel.ControllerMixin],
@@ -17,6 +54,7 @@ const App = createReactClass({
       <div style={{width: '50%', margin: 'auto'}}>
         <Carousel
           ref="carousel"
+          breakpoints={breakpoints}
           data={this.setCarouselData.bind(this, 'carousel')}
           slideIndex={this.state.slideIndex}
           afterSlide={newSlideIndex => this.setState({ slideIndex: newSlideIndex })}>
@@ -26,6 +64,8 @@ const App = createReactClass({
           <img src="http://placehold.it/1000x400&text=slide4"/>
           <img src="http://placehold.it/1000x400&text=slide5"/>
           <img src="http://placehold.it/1000x400&text=slide6"/>
+          <img src="http://placehold.it/1000x400&text=slide7"/>
+          <img src="http://placehold.it/1000x400&text=slide8"/>
         </Carousel>
         <button onClick={() => this.setState({ slideIndex: 0 })}>1</button>
         <button onClick={() => this.setState({ slideIndex: 1 })}>2</button>
